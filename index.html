@@ -1,4 +1,3 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -195,6 +194,60 @@
       </div>
     </section>
 
+    <section id="works" class="py-10">
+      <div class="reveal flex items-end justify-between gap-4">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[.18em] text-indigo-600" data-i18n="workKicker">Experience</p>
+          <h2 class="mt-2 text-3xl md:text-4xl font-extrabold tracking-tight" data-i18n="workTitle">Projects</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="scrollRow(-1)" aria-label="Previous" class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-soft hover:bg-slate-900 hover:text-white transition flex items-center justify-center"><svg class="ic text-sm" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+          <button onclick="scrollRow(1)" aria-label="Next" class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-soft hover:bg-slate-900 hover:text-white transition flex items-center justify-center"><svg class="ic text-sm" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+        </div>
+      </div>
+
+      <div id="project-row" class="snap-row reveal mt-6">
+        <article onclick="openModal('project1')" class="lift cursor-pointer group bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
+          <div class="h-48 bg-gradient-to-br from-indigo-500 via-indigo-600 to-purple-600 p-6 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-40 h-40 bg-white/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+            <span class="self-start px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/20 text-white uppercase tracking-wider backdrop-blur">AI</span>
+            <svg class="ic text-5xl text-white/90" aria-hidden="true"><use href="#i-brain"/></svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold">Vision AI Recognition</h3>
+            <p class="mt-1.5 text-sm text-slate-500 leading-relaxed" data-i18n="p1Short">Computer vision app built with Python and deep learning models.</p>
+            <p class="mt-4 text-xs font-semibold text-indigo-600">Python · PyTorch · OpenCV</p>
+          </div>
+        </article>
+
+        <article onclick="openModal('project2')" class="lift cursor-pointer group bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
+          <div class="h-48 bg-gradient-to-br from-rose-500 via-rose-500 to-amber-500 p-6 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-40 h-40 bg-white/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+            <span class="self-start px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/20 text-white uppercase tracking-wider backdrop-blur">PR · Media</span>
+            <svg class="ic text-5xl text-white/90" aria-hidden="true"><use href="#i-clapperboard"/></svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold">Pureum Student Council Media</h3>
+            <p class="mt-1.5 text-sm text-slate-500 leading-relaxed" data-i18n="p2Short">Promo videos, poster branding and event marketing for the AI Student Council.</p>
+            <p class="mt-4 text-xs font-semibold text-rose-600">Video Editing · Branding</p>
+          </div>
+        </article>
+
+        <article onclick="openModal('project3')" class="lift cursor-pointer group bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
+          <div class="h-48 bg-gradient-to-br from-teal-500 via-emerald-500 to-emerald-600 p-6 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-40 h-40 bg-white/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+            <span class="self-start px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/20 text-white uppercase tracking-wider backdrop-blur">Global</span>
+            <svg class="ic text-5xl text-white/90" aria-hidden="true"><use href="#i-earth-americas"/></svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold">Toronto Study Log</h3>
+            <p class="mt-1.5 text-sm text-slate-500 leading-relaxed" data-i18n="p3Short">Twelve weeks of culture, networking and language learning in Toronto.</p>
+            <p class="mt-4 text-xs font-semibold text-teal-600">Vlog · Global Network</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section id="about" class="py-10">
       <div class="reveal">
         <p class="text-xs font-bold uppercase tracking-[.18em] text-indigo-600" data-i18n="aboutKicker">About</p>
@@ -261,60 +314,6 @@
           <span class="px-6">Traveling ✈️</span><span class="px-6 text-slate-300">·</span>
           <span class="px-6">Languages 🌏</span><span class="px-6 text-slate-300">·</span>
         </div>
-      </div>
-    </section>
-
-    <section id="works" class="py-10">
-      <div class="reveal flex items-end justify-between gap-4">
-        <div>
-          <p class="text-xs font-bold uppercase tracking-[.18em] text-indigo-600" data-i18n="workKicker">Experience</p>
-          <h2 class="mt-2 text-3xl md:text-4xl font-extrabold tracking-tight" data-i18n="workTitle">Projects</h2>
-        </div>
-        <div class="flex items-center gap-2">
-          <button onclick="scrollRow(-1)" aria-label="Previous" class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-soft hover:bg-slate-900 hover:text-white transition flex items-center justify-center"><svg class="ic text-sm" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
-          <button onclick="scrollRow(1)" aria-label="Next" class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-soft hover:bg-slate-900 hover:text-white transition flex items-center justify-center"><svg class="ic text-sm" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
-        </div>
-      </div>
-
-      <div id="project-row" class="snap-row reveal mt-6">
-        <article onclick="openModal('project1')" class="lift cursor-pointer group bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
-          <div class="h-48 bg-gradient-to-br from-indigo-500 via-indigo-600 to-purple-600 p-6 flex flex-col justify-between relative overflow-hidden">
-            <div class="absolute -right-6 -bottom-6 w-40 h-40 bg-white/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-            <span class="self-start px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/20 text-white uppercase tracking-wider backdrop-blur">AI</span>
-            <svg class="ic text-5xl text-white/90" aria-hidden="true"><use href="#i-brain"/></svg>
-          </div>
-          <div class="p-6">
-            <h3 class="text-lg font-bold">Vision AI Recognition</h3>
-            <p class="mt-1.5 text-sm text-slate-500 leading-relaxed" data-i18n="p1Short">Computer vision app built with Python and deep learning models.</p>
-            <p class="mt-4 text-xs font-semibold text-indigo-600">Python · PyTorch · OpenCV</p>
-          </div>
-        </article>
-
-        <article onclick="openModal('project2')" class="lift cursor-pointer group bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
-          <div class="h-48 bg-gradient-to-br from-rose-500 via-rose-500 to-amber-500 p-6 flex flex-col justify-between relative overflow-hidden">
-            <div class="absolute -right-6 -bottom-6 w-40 h-40 bg-white/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-            <span class="self-start px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/20 text-white uppercase tracking-wider backdrop-blur">PR · Media</span>
-            <svg class="ic text-5xl text-white/90" aria-hidden="true"><use href="#i-clapperboard"/></svg>
-          </div>
-          <div class="p-6">
-            <h3 class="text-lg font-bold">Pureum Student Council Media</h3>
-            <p class="mt-1.5 text-sm text-slate-500 leading-relaxed" data-i18n="p2Short">Promo videos, poster branding and event marketing for the AI Student Council.</p>
-            <p class="mt-4 text-xs font-semibold text-rose-600">Video Editing · Branding</p>
-          </div>
-        </article>
-
-        <article onclick="openModal('project3')" class="lift cursor-pointer group bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
-          <div class="h-48 bg-gradient-to-br from-teal-500 via-emerald-500 to-emerald-600 p-6 flex flex-col justify-between relative overflow-hidden">
-            <div class="absolute -right-6 -bottom-6 w-40 h-40 bg-white/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-            <span class="self-start px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/20 text-white uppercase tracking-wider backdrop-blur">Global</span>
-            <svg class="ic text-5xl text-white/90" aria-hidden="true"><use href="#i-earth-americas"/></svg>
-          </div>
-          <div class="p-6">
-            <h3 class="text-lg font-bold">Toronto Study Log</h3>
-            <p class="mt-1.5 text-sm text-slate-500 leading-relaxed" data-i18n="p3Short">Twelve weeks of culture, networking and language learning in Toronto.</p>
-            <p class="mt-4 text-xs font-semibold text-teal-600">Vlog · Global Network</p>
-          </div>
-        </article>
       </div>
     </section>
 
@@ -473,7 +472,7 @@
         p2Short: 'Promo videos, poster branding and event marketing for the AI Student Council.',
         p3Short: 'Twelve weeks of culture, networking and language learning in Toronto.',
         videoKicker: 'Video Works', videoTitle: 'Editing Reel',
-        videoEmpty: 'Video links coming soon.', videoChannel: 'Visit YouTube channel',
+        videoEmpty: 'Video links coming soon.', videoChannel: 'Visit YouTube channel', videoWatch: 'Watch on YouTube',
         stackKicker: 'Tech Stack', stackTitle: 'What I Use',
         grpAI: 'AI & Data', grpTools: 'Tools & Creative',
         s1: 'Data & machine learning', s2: 'Deep learning models', s3: 'Computer vision',
@@ -493,7 +492,7 @@
         aboutKicker: '소개',
         aboutTitle: '만드는 걸 좋아하는 AI 전공생.',
         expKicker: '활동 경력',
-        role1: '제5대 인공지능학과 학생회 \'푸름\' 홍보차장',
+        role1: '제5대 인공지능학과 학생회 \'푸름\' 홍보 차장',
         role1Desc: '동아대학교 인공지능학과의 콘텐츠 제작, 홍보 캠페인, 커뮤니티 활동을 이끌고 있습니다.',
         tagPR: '홍보', tagVideo: '영상', tagCommunity: '커뮤니티',
         inspireKicker: '무엇이 나를 움직일까?',
@@ -506,7 +505,7 @@
         p2Short: '학생회 홍보 영상, 포스터 브랜딩, 행사 마케팅.',
         p3Short: '토론토 12주, 문화와 네트워킹과 언어 공부의 기록.',
         videoKicker: '영상 작업', videoTitle: '편집 작업물',
-        videoEmpty: '영상 링크를 곧 추가할게요.', videoChannel: '유튜브 채널 방문하기',
+        videoEmpty: '영상 링크를 곧 추가할게요.', videoChannel: '유튜브 채널 방문하기', videoWatch: '유튜브에서 보기',
         stackKicker: '기술 스택', stackTitle: '사용하는 도구',
         grpAI: 'AI · 데이터', grpTools: '도구 · 크리에이티브',
         s1: '데이터 · 머신러닝', s2: '딥러닝 모델', s3: '컴퓨터 비전',
@@ -539,7 +538,7 @@
         p2Short: '学生会の広報映像、ポスターデザイン、イベント企画とマーケティング。',
         p3Short: 'トロントでの12週間の記録。異文化体験、人との出会い、語学学習。',
         videoKicker: '映像作品', videoTitle: '編集作品',
-        videoEmpty: '動画は近日公開予定です。', videoChannel: 'YouTubeチャンネルを見る',
+        videoEmpty: '動画は近日公開予定です。', videoChannel: 'YouTubeチャンネルを見る', videoWatch: 'YouTubeで見る',
         stackKicker: '技術スタック', stackTitle: '使っているツール',
         grpAI: 'AI・データ', grpTools: 'ツール・クリエイティブ',
         s1: 'データ・機械学習', s2: 'ディープラーニングモデル', s3: 'コンピュータビジョン',
@@ -567,7 +566,7 @@
         category: 'Branding & Media Creation',
         tags: ['Video Editing', 'PR Strategy', 'Graphic Design', 'YouTube'],
         en: "As PR Deputy Director of the 5th AI Student Council 'Pureum', I created branding assets, promo videos and social campaigns for students.",
-        ko: "제5대 인공지능학과 학생회 '푸름'의 홍보차장으로서 홍보 영상, 카드뉴스, 행사 비주얼 브랜딩을 기획하고 제작했습니다.",
+        ko: "제5대 인공지능학과 학생회 '푸름'의 홍보 차장으로서 홍보 영상, 카드뉴스, 행사 비주얼 브랜딩을 기획하고 제작했습니다.",
         ja: "第5代人工知能学科学生会「プルム」の広報次長として、広報映像、カードニュース、イベント用のビジュアルブランディングを企画・制作しました。",
         youtube: 'https://youtube.com/@conner_217?si=lacO6ZT7flECPBes',
         instagram: 'https://instagram.com/217.1717'
@@ -600,7 +599,7 @@
     }
 
     const videoList = [
-      { url: '', title: '' },
+      { url: 'https://youtu.be/gJmwLQmpIW0', title: '' },
       { url: '', title: '' },
       { url: '', title: '' }
     ];
@@ -642,6 +641,7 @@
         <div class="rounded-3xl overflow-hidden bg-slate-900 shadow-lift aspect-video">
           <iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${cur.id}" title="${cur.title || 'YouTube video'}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
         </div>
+        <div class="mt-4 flex justify-end"><a href="https://youtu.be/${cur.id}" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-red-600 text-white text-xs font-semibold hover:bg-red-700 transition">${dict[currentLang].videoWatch}</a></div>
         ${items.length > 1 ? `<div class="mt-4 flex gap-3 overflow-x-auto pb-2">${thumbs}</div>` : ''}`;
     }
 
@@ -730,5 +730,3 @@
   </script>
 </body>
 </html>
-
-</body></html>
