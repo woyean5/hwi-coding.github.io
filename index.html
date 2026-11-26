@@ -52,6 +52,8 @@
     .pin-stage { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
     #works { scroll-snap-type: none; }
     #project-row { scroll-snap-type: none; overflow: hidden; }
+    .bg-bestcut { background-image: linear-gradient(to bottom right, #0EA5E9, #3B82F6, #4F46E5); }
+    .text-bestcut { color: #0284C7; }
     .pin-count { font-size: 12px; font-weight: 600; color: #94A3B8; margin-top: 4px; font-variant-numeric: tabular-nums; }
     .w { color: #CBD5E1; transition: color .35s ease; }
     .w.on { color: #0F172A; }
@@ -126,6 +128,7 @@
       <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></g></symbol>
       <symbol id="i-plane-departure" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></g></symbol>
       <symbol id="i-language" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></g></symbol>
+      <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></g></symbol>
       <symbol id="i-brain" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></g></symbol>
       <symbol id="i-clapperboard" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></g></symbol>
       <symbol id="i-earth-americas" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></g></symbol>
@@ -219,13 +222,13 @@
       </div>
     </section>
 
-    <section id="works" class="relative" style="height:190vh">
+    <section id="works" class="relative" style="height:230vh">
       <div class="pin-stage">
       <div class="reveal flex items-end justify-between gap-4">
         <div>
           <p class="text-xs font-bold uppercase tracking-[.18em] text-indigo-600" data-i18n="workKicker">Experience</p>
           <h2 class="mt-2 text-3xl md:text-4xl font-extrabold tracking-tight" data-i18n="workTitle">Projects</h2>
-          <p id="work-count" class="pin-count">01 / 03</p>
+          <p id="work-count" class="pin-count">01 / 04</p>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="scrollRow(-1)" aria-label="Previous" class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-soft hover:bg-slate-900 hover:text-white transition flex items-center justify-center"><svg class="ic text-sm" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
@@ -234,6 +237,19 @@
       </div>
 
       <div id="project-row" class="snap-row reveal mt-6">
+        <article onclick="openModal('bestcut')" class="lift cursor-pointer group bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
+          <div class="h-48 bg-bestcut p-6 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-40 h-40 bg-white/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+            <span class="self-start px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/20 text-white uppercase tracking-wider backdrop-blur">iOS App</span>
+            <svg class="ic text-5xl text-white/90" aria-hidden="true"><use href="#i-camera"/></svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-lg font-bold">BestCut</h3>
+            <p class="mt-1.5 text-sm text-slate-500 leading-relaxed" data-i18n="p0Short">An iPhone app that groups similar shots and keeps only your best photos.</p>
+            <p class="mt-4 text-xs font-semibold text-bestcut">Swift · SwiftUI · Vision</p>
+          </div>
+        </article>
+
         <article onclick="openModal('project1')" class="lift cursor-pointer group bg-white rounded-3xl border border-slate-200 shadow-soft overflow-hidden">
           <div class="h-48 bg-gradient-to-br from-indigo-500 via-indigo-600 to-purple-600 p-6 flex flex-col justify-between relative overflow-hidden">
             <div class="absolute -right-6 -bottom-6 w-40 h-40 bg-white/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
@@ -503,6 +519,7 @@
         langs: 'EN · Basic Chinese & Japanese',
         likeKicker: 'I also like…',
         workKicker: 'Experience', workTitle: 'Projects',
+        p0Short: 'An iPhone app that groups similar shots and keeps only your best photos.',
         p1Short: 'Computer vision app built with Python and deep learning models.',
         p2Short: 'Promo videos, poster branding and event marketing for the AI Student Council.',
         p3Short: 'Twelve weeks of culture, networking and language learning in Toronto.',
@@ -536,6 +553,7 @@
         langs: '영어 · 중국어/일본어 기초 회화',
         likeKicker: '이런 것도 좋아해요…',
         workKicker: '경험', workTitle: '프로젝트',
+        p0Short: '비슷한 사진을 묶고 잘 나온 사진만 남겨 주는 iPhone 사진 정리 앱.',
         p1Short: 'Python과 딥러닝 모델로 만든 컴퓨터 비전 프로젝트.',
         p2Short: '학생회 홍보 영상, 포스터 브랜딩, 행사 마케팅.',
         p3Short: '토론토 12주, 문화와 네트워킹과 언어 공부의 기록.',
@@ -569,6 +587,7 @@
         langs: '英語 · 中国語・日本語（基礎会話）',
         likeKicker: 'こんなことも好きです…',
         workKicker: '経験', workTitle: 'プロジェクト',
+        p0Short: '似た写真をまとめて、よく撮れた一枚だけを残すiPhone写真整理アプリ。',
         p1Short: 'Pythonとディープラーニングで作った画像認識プロジェクト。',
         p2Short: '学生会の広報映像、ポスターデザイン、イベント企画とマーケティング。',
         p3Short: 'トロントでの12週間の記録。異文化体験、人との出会い、語学学習。',
@@ -587,6 +606,14 @@
     };
 
     const projects = {
+      bestcut: {
+        title: 'BestCut',
+        category: 'iOS App Development',
+        tags: ['Swift', 'SwiftUI', 'Vision', 'PhotoKit', 'SwiftData'],
+        en: 'An iPhone photo cleaner. Pick a date range and BestCut analyzes the photos on-device, groups similar shots and screenshots, flags blurry, dark or eyes-closed photos, and recommends the best shot in each group. Swipe to keep or discard, and multi-city trips are split into folders by city automatically. Photos never leave the iPhone.',
+        ko: '잘 나온 사진만 남기는 iPhone 사진 정리 앱입니다. 기간을 고르면 iPhone 안에서 사진을 분석해 비슷한 사진과 스크린샷을 묶고, 흔들리거나 어둡거나 눈 감은 사진을 표시하고, 묶음마다 베스트 컷을 추천합니다. 스와이프로 남길 사진을 고르고, 여러 도시를 다녀온 여행은 도시별 폴더로 자동으로 나눕니다. 사진은 기기 밖으로 나가지 않습니다.',
+        ja: 'よく撮れた写真だけを残すiPhone写真整理アプリです。期間を選ぶとiPhone内で写真を分析し、似た写真やスクリーンショットをまとめ、ブレ・暗い・目つぶりの写真を表示し、グループごとにベストショットをおすすめします。スワイプで残す写真を選び、複数の都市を巡った旅行は都市ごとのフォルダに自動で分けます。写真が端末の外に出ることはありません。'
+      },
       project1: {
         title: 'Vision AI Recognition',
         category: 'AI & Software Development',
@@ -729,7 +756,7 @@
         <h3 class="text-2xl font-extrabold mt-1 mb-4 pr-10">${d.title}</h3>
         <div class="flex flex-wrap gap-1.5 mb-5">${tags}</div>
         <p class="text-sm text-slate-600 leading-relaxed mb-6">${d[currentLang]}</p>
-        <div class="flex flex-wrap gap-2 pt-5 border-t border-slate-100">${links}</div>`;
+        ${links ? `<div class="flex flex-wrap gap-2 pt-5 border-t border-slate-100">${links}</div>` : ''}`;
       const modal = document.getElementById('project-modal');
       modal.classList.remove('opacity-0', 'pointer-events-none');
       document.getElementById('modal-content').classList.replace('scale-95', 'scale-100');
