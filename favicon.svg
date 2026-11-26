@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="36 44 128 128"><defs><clipPath id="c"><circle cx="100" cy="108" r="64"/></clipPath></defs><g clip-path="url(#c)">
-            <rect width="200" height="200" fill="#F1F5F9"/>
+            
             <path d="M18 200C18 160 52 143 86 141L114 141C148 143 182 160 182 200Z" fill="#111827"/>
             <path d="M86 141L98 178M114 141L102 178" fill="none" stroke="#64748B" stroke-width="3" stroke-linecap="round"/>
             <path d="M88 124H112V144H88Z" fill="#111827"/>
