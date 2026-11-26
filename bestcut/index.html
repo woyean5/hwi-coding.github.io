@@ -22,7 +22,8 @@
     html[lang="ko"] body { word-break: keep-all; overflow-wrap: break-word; }
     a { color: inherit; text-decoration: none; }
     .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
-    section + section, .gal-pin + section { margin-top: 128px; }
+    section + section, .gal-pin + section, section + .gal-pin { margin-top: 128px; }
+    .gal-pin + .feat-sec { margin-top: 24px; }
 
     .label { font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: -.005em; }
     .value { font-size: 21px; font-weight: 600; letter-spacing: -.02em; line-height: 1.3; }
@@ -36,7 +37,14 @@
     .stage { position: relative; }
     .stage::after { content: ''; position: absolute; left: 4%; right: 4%; bottom: -18px; height: 80px; background: #FAFAFA; border-radius: 0 0 28px 28px; z-index: -1; }
     .stage .card { border-radius: 32px; }
-    .gal-pin { position: relative; margin-top: 64px; }
+    .gal-pin { position: relative; }
+    .gal-pin.first { margin-top: 64px; }
+    .gal-pin.static .gal-stage { position: static; height: auto; padding: 0; }
+    .gal-pin.static .gal-progress { display: none; }
+    .gal-pin.static .gal-track { width: auto; justify-content: center; }
+    .gal-pin.static .gal-track img { flex: 1 1 0; min-width: 0; max-width: 250px; width: 100%; height: auto; }
+    .stage.alt::after { display: none; }
+    .stage.alt .card { box-shadow: 0 20px 60px rgba(0,0,0,.08); }
     .gal-stage { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 24px 0 112px; }
     .stage .gal-card { padding: 40px 0; overflow: hidden; }
     .gal-track { display: flex; gap: 20px; width: max-content; padding: 0 40px; will-change: transform; }
@@ -91,11 +99,12 @@
     @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .gal-track img, .dock a { transition: none; } .gal-pin { height: auto !important; } .gal-stage { position: static; height: auto; padding: 0; } .stage .gal-card { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; } .gal-track { transform: none !important; } .gal-track img { scroll-snap-align: center; height: min(540px, 70svh); } html { scroll-behavior: auto; } }
 
     @media (max-width: 768px) {
-      section + section, .gal-pin + section { margin-top: 96px; }
+      section + section, .gal-pin + section, section + .gal-pin { margin-top: 96px; }
+      .gal-pin + .feat-sec { margin-top: 16px; }
       .hero { padding-top: 64px; }
       .hero h1 { font-size: 40px; }
       .hero p { font-size: 18px; }
-      .gal-pin { margin-top: 48px; }
+      .gal-pin.first { margin-top: 48px; }
       .gal-stage { padding: 16px 0 104px; }
       .stage .gal-card { padding: 24px 0; border-radius: 28px; }
       .gal-track { gap: 14px; padding: 0 20px; }
@@ -118,12 +127,12 @@
       <p data-t="tagline"></p>
     </section>
 
-    <div class="gal-pin" id="gal-pin">
+    <div class="gal-pin first">
       <div class="gal-stage">
         <div class="stage reveal">
-          <div class="card gal-card"><div id="shots-main" class="gal-track"></div></div>
+          <div class="card gal-card"><div class="gal-track" data-shots="1,2,3"></div></div>
         </div>
-        <div class="gal-progress" aria-hidden="true"><i id="gal-bar"></i></div>
+        <div class="gal-progress" aria-hidden="true"><i></i></div>
       </div>
     </div>
 
@@ -140,7 +149,16 @@
       </div>
     </section>
 
-    <section class="reveal">
+    <div class="gal-pin">
+      <div class="gal-stage">
+        <div class="stage alt reveal">
+          <div class="card gal-card"><div class="gal-track" data-shots="4,5,6"></div></div>
+        </div>
+        <div class="gal-progress" aria-hidden="true"><i></i></div>
+      </div>
+    </div>
+
+    <section class="feat-sec reveal">
       <div class="features" id="features"></div>
     </section>
 
@@ -242,30 +260,36 @@
     };
 
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-    let galMax = 0;
+    const galleries = [...document.querySelectorAll('.gal-pin')].map(pin => ({
+      pin, track: pin.querySelector('.gal-track'), card: pin.querySelector('.gal-card'), bar: pin.querySelector('.gal-progress i'), max: 0
+    }));
 
-    function layoutGallery() {
-      const pin = document.getElementById('gal-pin');
-      const track = document.getElementById('shots-main');
-      const card = track.parentElement;
-      galMax = Math.max(0, track.scrollWidth - card.clientWidth);
-      pin.style.height = reduceMotion.matches || !galMax ? '' : Math.round(window.innerHeight + galMax * 1.15) + 'px';
-      updateGallery();
+    function layoutGalleries() {
+      galleries.forEach(g => {
+        g.pin.classList.remove('static');
+        g.track.style.transform = '';
+        const overflow = g.track.scrollWidth - g.card.clientWidth;
+        g.max = overflow > 48 ? overflow : 0;
+        const pinned = !reduceMotion.matches && g.max > 0;
+        g.pin.classList.toggle('static', !g.max);
+        g.pin.style.height = pinned ? Math.round(window.innerHeight + g.max * 1.15) + 'px' : '';
+        if (!pinned) g.track.style.transform = '';
+      });
+      updateGalleries();
     }
 
-    function updateGallery() {
-      const pin = document.getElementById('gal-pin');
-      const track = document.getElementById('shots-main');
-      const card = track.parentElement;
-      let p;
-      if (reduceMotion.matches) {
-        p = galMax ? card.scrollLeft / galMax : 0;
-      } else {
-        const total = pin.offsetHeight - window.innerHeight;
-        p = total > 0 ? Math.min(1, Math.max(0, -pin.getBoundingClientRect().top / total)) : 0;
-        track.style.transform = 'translate3d(' + (-p * galMax).toFixed(1) + 'px,0,0)';
-      }
-      document.getElementById('gal-bar').style.width = (Math.min(1, Math.max(0, p)) * 100).toFixed(1) + '%';
+    function updateGalleries() {
+      galleries.forEach(g => {
+        let p = 0;
+        if (reduceMotion.matches) {
+          p = g.max ? g.card.scrollLeft / g.max : 0;
+        } else if (g.max > 1) {
+          const total = g.pin.offsetHeight - window.innerHeight;
+          p = total > 0 ? Math.min(1, Math.max(0, -g.pin.getBoundingClientRect().top / total)) : 0;
+          g.track.style.transform = 'translate3d(' + (-p * g.max).toFixed(1) + 'px,0,0)';
+        }
+        g.bar.style.width = (Math.min(1, Math.max(0, p)) * 100).toFixed(1) + '%';
+      });
     }
 
     function setLang(lang) {
@@ -278,8 +302,8 @@
       document.querySelectorAll('.langs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
       const sl = lang === 'ko' ? 'ko' : 'en';
       const shots = list => list.map(n => `<img src="../assets/bestcut/shots/${sl}/${n}.webp" alt="${BC_ALT[sl][n - 1]}" width="720" height="1564" decoding="async">`).join('');
-      document.getElementById('shots-main').innerHTML = shots([1, 2, 3, 4, 5, 6]);
-      layoutGallery();
+      galleries.forEach(g => { g.track.innerHTML = shots(g.track.dataset.shots.split(',').map(Number)); });
+      layoutGalleries();
       document.querySelectorAll('a[data-sec]').forEach(a => a.setAttribute('href', '../?lang=' + lang + '#' + a.dataset.sec));
       try { history.replaceState(null, '', '?lang=' + lang); } catch (e) {}
     }
@@ -288,14 +312,14 @@
     setLang(new URLSearchParams(location.search).get('lang') || 'ko');
 
     let lastWidth = document.documentElement.clientWidth;
-    window.addEventListener('scroll', updateGallery, { passive: true });
+    window.addEventListener('scroll', updateGalleries, { passive: true });
     window.addEventListener('resize', () => {
       const w = document.documentElement.clientWidth;
-      if (w !== lastWidth) { lastWidth = w; layoutGallery(); } else updateGallery();
+      if (w !== lastWidth) { lastWidth = w; layoutGalleries(); } else updateGalleries();
     });
-    window.addEventListener('load', layoutGallery);
-    reduceMotion.addEventListener('change', layoutGallery);
-    document.getElementById('shots-main').parentElement.addEventListener('scroll', updateGallery, { passive: true });
+    window.addEventListener('load', layoutGalleries);
+    reduceMotion.addEventListener('change', layoutGalleries);
+    galleries.forEach(g => g.card.addEventListener('scroll', updateGalleries, { passive: true }));
 
     const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
