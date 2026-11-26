@@ -24,6 +24,7 @@
     .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
     section + section, .gal-pin + section, section + .gal-pin { margin-top: 128px; }
     .gal-pin + .feat-sec { margin-top: 24px; }
+    .hero + .meta { margin-top: 72px; }
 
     .label { font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: -.005em; }
     .value { font-size: 21px; font-weight: 600; letter-spacing: -.02em; line-height: 1.3; }
@@ -101,6 +102,7 @@
     @media (max-width: 768px) {
       section + section, .gal-pin + section, section + .gal-pin { margin-top: 96px; }
       .gal-pin + .feat-sec { margin-top: 16px; }
+      .hero + .meta { margin-top: 48px; }
       .hero { padding-top: 64px; }
       .hero h1 { font-size: 40px; }
       .hero p { font-size: 18px; }
@@ -127,15 +129,6 @@
       <p data-t="tagline"></p>
     </section>
 
-    <div class="gal-pin first">
-      <div class="gal-stage">
-        <div class="stage reveal">
-          <div class="card gal-card"><div class="gal-track" data-shots="1,2,3"></div></div>
-        </div>
-        <div class="gal-progress" aria-hidden="true"><i></i></div>
-      </div>
-    </div>
-
     <section class="meta reveal">
       <div class="card meta-list">
         <div><p class="label" data-t="lType"></p><p class="value" data-t="vType"></p></div>
@@ -149,10 +142,10 @@
       </div>
     </section>
 
-    <div class="gal-pin">
+    <div class="gal-pin first">
       <div class="gal-stage">
-        <div class="stage alt reveal">
-          <div class="card gal-card"><div class="gal-track" data-shots="4,5,6"></div></div>
+        <div class="stage reveal">
+          <div class="card gal-card"><div class="gal-track" data-shots="1,2,3"></div></div>
         </div>
         <div class="gal-progress" aria-hidden="true"><i></i></div>
       </div>
@@ -161,6 +154,15 @@
     <section class="feat-sec reveal">
       <div class="features" id="features"></div>
     </section>
+
+    <div class="gal-pin">
+      <div class="gal-stage">
+        <div class="stage alt reveal">
+          <div class="card gal-card"><div class="gal-track" data-shots="4,5,6"></div></div>
+        </div>
+        <div class="gal-progress" aria-hidden="true"><i></i></div>
+      </div>
+    </div>
 
     <section class="bento reveal" id="contact">
       <div class="r1">
