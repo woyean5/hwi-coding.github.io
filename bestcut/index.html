@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BestCut | Geonhwi Yang</title>
+  <meta name="description" content="BestCut: an iPhone app that groups similar shots and keeps only your best photos.">
+  <meta property="og:title" content="BestCut | Geonhwi Yang">
+  <meta property="og:description" content="An iPhone app that groups similar shots and keeps only your best photos.">
+  <meta property="og:image" content="https://woyean5.github.io/assets/bestcut/icon.png">
+  <link rel="icon" href="../assets/bestcut/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/bestcut/phones.css">
+  <script src="../assets/bestcut/phones.js"></script>
+  <style>
+    :root { --ink: #0F172A; --muted: #64748B; --line: #E8EAEF; --bg: #F7F7F9; --card: #FFFFFF; --green: #15803D; --soft: #F1F5F9; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: 'Inter', 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.6; }
+    html[lang="ja"] body { font-family: 'Inter', 'Noto Sans JP', 'Noto Sans KR', sans-serif; }
+    html[lang="ko"] body { word-break: keep-all; overflow-wrap: break-word; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+
+    .top { position: sticky; top: 0; z-index: 10; background: rgba(247,247,249,.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .back { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--muted); }
+    .back:hover { color: var(--ink); }
+    .langs { display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: #EEF0F4; }
+    .langs button { border: 0; background: none; font: inherit; font-size: 12px; font-weight: 700; color: var(--muted); padding: 6px 10px; border-radius: 999px; cursor: pointer; }
+    .langs button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(17,24,39,.1); }
+
+    .hero { text-align: center; padding: 56px 0 28px; }
+    .hero img { width: 112px; height: 112px; border-radius: 26px; box-shadow: 0 0 0 1px rgba(15,23,42,.06), 0 14px 30px -10px rgba(15,23,42,.3); }
+    .hero h1 { margin-top: 22px; font-size: clamp(40px, 8vw, 64px); font-weight: 800; letter-spacing: -.03em; line-height: 1.05; }
+    .hero .tag { margin-top: 12px; font-size: clamp(18px, 3vw, 22px); font-weight: 600; color: var(--muted); }
+    .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 36px; background: var(--line); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; text-align: left; }
+    .meta div { background: var(--card); padding: 16px 18px; }
+    .meta dt { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #94A3B8; }
+    .meta dd { margin-top: 4px; font-size: 14px; font-weight: 600; }
+    @media (max-width: 640px) { .meta { grid-template-columns: 1fr 1fr; } }
+
+    .shots { margin-top: 28px; padding: clamp(24px, 5vw, 48px) clamp(8px, 4vw, 48px); border-radius: 32px; background: linear-gradient(180deg, #EEF2F7, #E2E8F0); }
+
+    section.block { margin-top: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 32px; padding: clamp(24px, 5vw, 44px); }
+    .kicker { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #4F46E5; }
+    .block h2 { margin-top: 8px; font-size: clamp(24px, 4vw, 32px); font-weight: 800; letter-spacing: -.02em; line-height: 1.25; }
+    .block > p { margin-top: 14px; color: #475569; font-size: 16px; max-width: 64ch; }
+
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+    .feat { padding: 18px; border-radius: 20px; background: var(--soft); }
+    .feat .ico { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: #fff; color: #007AFF; box-shadow: 0 1px 2px rgba(17,24,39,.06); }
+    .feat .ico svg { width: 22px; height: 22px; }
+    .feat h3 { margin-top: 12px; font-size: 16px; font-weight: 700; }
+    .feat p { margin-top: 4px; font-size: 14px; color: var(--muted); }
+
+    .steps { list-style: none; margin-top: 24px; display: grid; gap: 10px; counter-reset: s; }
+    .steps li { counter-increment: s; display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; padding: 16px; border-radius: 20px; background: var(--soft); }
+    .steps li::before { content: counter(s); width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 800; display: grid; place-items: center; }
+    .steps b { display: block; font-size: 16px; }
+    .steps span { font-size: 14px; color: var(--muted); }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .chips span { padding: 7px 14px; border-radius: 999px; background: var(--soft); font-size: 13px; font-weight: 600; }
+    .list { margin-top: 18px; display: grid; gap: 10px; padding-left: 0; list-style: none; }
+    .list li { position: relative; padding-left: 22px; font-size: 15px; color: #475569; }
+    .list li::before { content: ''; position: absolute; left: 4px; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: #34C759; }
+    code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: .92em; background: var(--soft); padding: 1px 6px; border-radius: 6px; }
+
+    section.block.privacy { background: #0F172A; color: #E2E8F0; border-color: #0F172A; }
+    .privacy .kicker { color: #86EFAC; }
+    .privacy h2 { color: #fff; }
+    .privacy .list li { color: #CBD5E1; }
+
+    footer { text-align: center; padding: 40px 0 56px; }
+    .home-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 26px; border-radius: 999px; background: var(--green); color: #fff; font-weight: 700; font-size: 15px; }
+    .home-btn:hover { background: #166534; }
+    footer p { margin-top: 18px; font-size: 12px; color: #94A3B8; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="back" href="../#app"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg><span data-t="back"></span></a>
+      <div class="langs" role="group" aria-label="Language">
+        <button data-lang="en">EN</button><button data-lang="ko">KO</button><button data-lang="ja">JA</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <img src="../assets/bestcut/icon.png" alt="BestCut app icon" width="112" height="112">
+      <h1>BestCut</h1>
+      <p class="tag" data-t="tag"></p>
+      <dl class="meta">
+        <div><dt data-t="mPlatform"></dt><dd>iOS 26 · iPhone</dd></div>
+        <div><dt data-t="mType"></dt><dd data-t="mTypeV"></dd></div>
+        <div><dt data-t="mPeriod"></dt><dd data-t="mPeriodV"></dd></div>
+        <div><dt data-t="mStatus"></dt><dd data-t="mStatusV"></dd></div>
+      </dl>
+    </div>
+
+    <div class="shots reveal"><div id="bc-phones" class="bc-phones"></div></div>
+
+    <section class="block reveal">
+      <p class="kicker" data-t="whyK"></p>
+      <h2 data-t="whyH"></h2>
+      <p data-t="whyP"></p>
+    </section>
+
+    <section class="block reveal">
+      <p class="kicker" data-t="featK"></p>
+      <h2 data-t="featH"></h2>
+      <div class="grid" id="features"></div>
+    </section>
+
+    <section class="block reveal">
+      <p class="kicker" data-t="howK"></p>
+      <h2 data-t="howH"></h2>
+      <ol class="steps" id="steps"></ol>
+    </section>
+
+    <section class="block reveal">
+      <p class="kicker" data-t="techK"></p>
+      <h2 data-t="techH"></h2>
+      <div class="chips"><span>Swift 6</span><span>SwiftUI</span><span>Liquid Glass</span><span>Vision</span><span>PhotoKit</span><span>SwiftData</span><span>MapKit</span><span>Swift Testing</span></div>
+      <ul class="list" id="tech"></ul>
+    </section>
+
+    <section class="block privacy reveal">
+      <p class="kicker" data-t="privK"></p>
+      <h2 data-t="privH"></h2>
+      <ul class="list" id="privacy"></ul>
+    </section>
+
+    <footer>
+      <a class="home-btn" href="../#works"><span data-t="more"></span></a>
+      <p>© 2026 Geonhwi Yang (양건휘)</p>
+    </footer>
+  </main>
+
+  <script>
+    const ICONS = {
+      stack: '<path d="M12 3 3 7.5 12 12l9-4.5z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/>',
+      flag: '<path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><circle cx="12" cy="12" r="3"/>',
+      star: '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/>',
+      hand: '<path d="M9 11V5a2 2 0 0 1 4 0v6"/><path d="M13 10V8a2 2 0 0 1 4 0v4"/><path d="M17 11a2 2 0 0 1 4 0v3a7 7 0 0 1-7 7h-1a7 7 0 0 1-5.6-2.8L4 14.5a2 2 0 0 1 3.2-2.4L9 14"/>',
+      map: '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+      chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'
+    };
+    const T = {
+      ko: {
+        back: '포트폴리오', tag: '잘 나온 사진만 남기는 iPhone 사진 정리 앱',
+        mPlatform: '플랫폼', mType: '형태', mTypeV: '개인 프로젝트', mPeriod: '기간', mPeriodV: '2026.11 –', mStatus: '상태', mStatusV: 'App Store 출시 준비 중',
+        whyK: '왜 만들었나', whyH: '여행 한 번에 사진 천 장. 고르는 건 늘 미뤄졌어요.',
+        whyP: '같은 장면을 다섯 번씩 찍다 보니 사진은 계속 쌓이는데, 그중에서 잘 나온 한 장을 고르는 일은 너무 귀찮았어요. BestCut은 비슷한 사진을 알아서 묶고 흔들린 사진을 표시해서, 사용자는 고르기만 하면 되도록 만든 앱이에요.',
+        featK: '주요 기능', featH: '고르는 일만 남기고 나머지는 앱이 해요.',
+        features: [
+          ['stack', '비슷한 사진 묶기', '같은 곳에서 연달아 찍은 사진과 영상 보다 찍은 스크린샷을 한 묶음으로 모아요.'],
+          ['flag', '흔들림·어두움 표시', '초점이 나갔거나 흔들린 사진, 너무 어둡거나 밝은 사진, 눈 감은 사진을 표시해요.'],
+          ['star', '베스트 컷 추천', '묶음마다 가장 선명하고 잘 나온 사진을 미리 골라 둬요.'],
+          ['hand', '스와이프로 고르기', '오른쪽은 남기기, 왼쪽은 지울 후보. 두 장을 나란히 놓고 함께 확대해 비교할 수도 있어요.'],
+          ['map', '도시별 자동 나누기', '여러 도시를 다녀온 여행은 사진 위치로 도시별 구간을 나누고 폴더로 묶어요.'],
+          ['chart', '결과 한눈에', '"1,284장 → 212장, 3.8GB 확보"처럼 결과를 보여 주고, 고른 사진은 베스트 앨범에 담아요.']
+        ],
+        howK: '동작 방식', howH: '네 단계로 끝나요.',
+        steps: [
+          ['기간 고르기', '여행, 주말, 지난달처럼 정리할 기간을 골라요.'],
+          ['iPhone 안에서 분석', 'Vision으로 사진마다 특징값을 뽑고, 선명도와 밝기, 눈 감음을 검사해요. 결과는 저장해 두고 다시 쓰기 때문에 두 번째부터는 빨라요.'],
+          ['묶고 추천하기', '특징값이 가까운 사진끼리 묶고, 묶음마다 베스트 컷을 골라요.'],
+          ['고르고 마무리', '스와이프로 고른 뒤 "[여행 이름] 베스트" 앨범을 만들고, 지울 사진은 마지막에 한 번 더 확인해요.']
+        ],
+        techK: '기술', techH: '애플 기본 프레임워크만으로 만들었어요.',
+        tech: [
+          'SwiftUI와 iOS 26 Liquid Glass로 화면을 만들었어요.',
+          '분석, 묶기, 추천, 규칙 같은 핵심 로직은 <code>TripPickCore</code> Swift 패키지로 분리하고 단위 테스트 92개로 검증해요.',
+          '사진 접근과 앨범·폴더 만들기는 PhotoKit, 정리 기록 저장은 SwiftData를 써요.',
+          '도시 이름은 MapKit으로 찾고, 한국어·영어·일본어·중국어(간체)를 지원해요.'
+        ],
+        privK: '개인정보', privH: '사진은 이 iPhone 밖으로 나가지 않아요.',
+        privacy: [
+          '모든 분석은 기기 안에서 해요. 서버도, 로그인도, 광고도, 추적도 없어요.',
+          '사진은 마지막에 한 번 더 확인한 뒤에만 지워져요.',
+          '지운 사진은 30일 동안 "최근 삭제된 항목"에서 되살릴 수 있어요.'
+        ],
+        more: '다른 프로젝트 보기'
+      },
+      en: {
+        back: 'Portfolio', tag: 'An iPhone app that keeps only your best shots',
+        mPlatform: 'Platform', mType: 'Type', mTypeV: 'Personal project', mPeriod: 'Period', mPeriodV: 'Nov 2026 –', mStatus: 'Status', mStatusV: 'Preparing for App Store',
+        whyK: 'Why', whyH: 'A thousand photos per trip, and picking always gets put off.',
+        whyP: 'You take the same shot five times, the photos pile up, and choosing the good one takes forever. BestCut groups similar photos and flags the blurry ones on its own, so all that is left for you is to pick.',
+        featK: 'Features', featH: 'You pick. The app does the rest.',
+        features: [
+          ['stack', 'Similar shots, grouped', 'Burst-like shots from the same spot, and screenshots taken while watching a video, land in one group.'],
+          ['flag', 'Blurry and dark, flagged', 'Out-of-focus or shaky shots, photos that are too dark or too bright, and closed eyes are marked.'],
+          ['star', 'Best shot, suggested', 'Each group comes with its sharpest, best-looking photo already picked.'],
+          ['hand', 'Swipe to choose', 'Right to keep, left to mark for deletion. Or put two photos side by side and zoom them together.'],
+          ['map', 'Split by city', 'A multi-city trip is split into one part per city using photo locations, and kept in a folder.'],
+          ['chart', 'Results at a glance', 'See "1,284 → 212 photos, 3.8 GB freed", with your picks saved to a best album.']
+        ],
+        howK: 'How it works', howH: 'Four steps.',
+        steps: [
+          ['Pick a date range', 'A trip, a weekend, or last month.'],
+          ['Analyze on the iPhone', 'Vision extracts a feature print for every photo, then sharpness, exposure and closed eyes are checked. Results are cached, so the next run is fast.'],
+          ['Group and suggest', 'Photos with close feature prints are grouped, and each group gets a best shot.'],
+          ['Choose and finish', 'Swipe through, then a "[Trip] Best" album is made. Deletions are confirmed once more at the end.']
+        ],
+        techK: 'Tech', techH: 'Built only with Apple frameworks.',
+        tech: [
+          'UI in SwiftUI with iOS 26 Liquid Glass.',
+          'Core logic (analysis, grouping, suggestions, rules) lives in the <code>TripPickCore</code> Swift package, covered by 92 unit tests.',
+          'PhotoKit for photo access and albums and folders, SwiftData for saved sessions.',
+          'City names from MapKit. Localized in Korean, English, Japanese and Simplified Chinese.'
+        ],
+        privK: 'Privacy', privH: 'Your photos never leave your iPhone.',
+        privacy: [
+          'All analysis runs on the device. No server, no login, no ads, no tracking.',
+          'Nothing is deleted until you confirm it one last time.',
+          'Deleted photos can be recovered from Recently Deleted for 30 days.'
+        ],
+        more: 'See other projects'
+      },
+      ja: {
+        back: 'ポートフォリオ', tag: 'よく撮れた写真だけを残すiPhone写真整理アプリ',
+        mPlatform: 'プラットフォーム', mType: '種類', mTypeV: '個人プロジェクト', mPeriod: '期間', mPeriodV: '2026.11 –', mStatus: '状況', mStatusV: 'App Store リリース準備中',
+        whyK: 'なぜ作ったか', whyH: '旅行1回で写真が千枚。選ぶのはいつも後回しでした。',
+        whyP: '同じ場面を何度も撮るうちに写真はどんどん増えるのに、その中からよく撮れた1枚を選ぶのは面倒でした。BestCutは似た写真を自動でまとめ、ブレた写真に印を付けるので、あとは選ぶだけです。',
+        featK: '主な機能', featH: '選ぶこと以外はアプリがやります。',
+        features: [
+          ['stack', '似た写真をまとめる', '同じ場所で続けて撮った写真や、動画を見ながら撮ったスクリーンショットを1つのグループにまとめます。'],
+          ['flag', 'ブレ・暗さを表示', 'ピンぼけやブレた写真、暗すぎる・明るすぎる写真、目をつぶった写真に印を付けます。'],
+          ['star', 'ベストショットをおすすめ', 'グループごとに一番くっきりよく撮れた写真をあらかじめ選んでおきます。'],
+          ['hand', 'スワイプで選ぶ', '右は残す、左は削除候補。2枚を並べて一緒に拡大して比べることもできます。'],
+          ['map', '都市ごとに自動で分ける', '複数の都市を巡った旅行は、写真の位置から都市ごとに分けてフォルダにまとめます。'],
+          ['chart', '結果がひと目で', '「1,284枚 → 212枚、3.8GB 確保」のように結果を表示し、選んだ写真はベストアルバムに入れます。']
+        ],
+        howK: '仕組み', howH: '4ステップで終わります。',
+        steps: [
+          ['期間を選ぶ', '旅行、週末、先月など、整理したい期間を選びます。'],
+          ['iPhoneの中で分析', 'Visionで写真ごとに特徴量を取り出し、鮮明さ・明るさ・目つぶりを調べます。結果は保存して再利用するので、2回目からは速くなります。'],
+          ['まとめておすすめ', '特徴量が近い写真同士をまとめ、グループごとにベストショットを選びます。'],
+          ['選んで仕上げ', 'スワイプで選んだら「[旅行名] ベスト」アルバムを作り、削除する写真は最後にもう一度確認します。']
+        ],
+        techK: '技術', techH: 'Appleの標準フレームワークだけで作りました。',
+        tech: [
+          'SwiftUIとiOS 26のLiquid Glassで画面を作りました。',
+          '分析・グループ化・おすすめ・ルールなどの中心ロジックは <code>TripPickCore</code> Swiftパッケージに分け、92個の単体テストで検証しています。',
+          '写真へのアクセスとアルバム・フォルダ作成はPhotoKit、整理の記録はSwiftDataで保存します。',
+          '都市名はMapKitで調べ、韓国語・英語・日本語・中国語（簡体字）に対応しています。'
+        ],
+        privK: 'プライバシー', privH: '写真がこのiPhoneの外に出ることはありません。',
+        privacy: [
+          '分析はすべて端末内で行います。サーバーもログインも広告もトラッキングもありません。',
+          '写真は最後にもう一度確認してからしか削除されません。',
+          '削除した写真は30日間「最近削除した項目」から復元できます。'
+        ],
+        more: 'ほかのプロジェクトを見る'
+      }
+    };
+
+    function setLang(lang) {
+      if (!T[lang]) lang = 'ko';
+      const t = T[lang];
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-t]').forEach(el => { el.textContent = t[el.dataset.t]; });
+      document.getElementById('features').innerHTML = t.features.map(([ic, h, p]) =>
+        `<div class="feat"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[ic]}</svg></div><h3>${h}</h3><p>${p}</p></div>`).join('');
+      document.getElementById('steps').innerHTML = t.steps.map(([b, s]) => `<li><div><b>${b}</b><span>${s}</span></div></li>`).join('');
+      document.getElementById('tech').innerHTML = t.tech.map(x => `<li>${x}</li>`).join('');
+      document.getElementById('privacy').innerHTML = t.privacy.map(x => `<li>${x}</li>`).join('');
+      document.querySelectorAll('.langs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+      renderBestcutPhones(document.getElementById('bc-phones'), lang);
+      document.querySelector('.back').href = '../?lang=' + lang + '#app';
+      document.querySelector('.home-btn').href = '../?lang=' + lang + '#works';
+      try { history.replaceState(null, '', '?lang=' + lang); } catch (e) {}
+    }
+
+    document.querySelectorAll('.langs button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+    setLang(new URLSearchParams(location.search).get('lang') || 'ko');
+
+    const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: .12 }) : null;
+    document.querySelectorAll('.reveal').forEach(el => io ? io.observe(el) : el.classList.add('in'));
+  </script>
+</body>
+</html>
