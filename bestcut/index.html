@@ -13,8 +13,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-  <link rel="stylesheet" href="../assets/bestcut/phones.css">
-  <script src="../assets/bestcut/phones.js"></script>
   <style>
     :root { --bg: #FFFFFF; --ink: #000000; --muted: rgba(0,0,0,.5); --card: #F5F5F5; --accent: #0071E3; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,9 +37,9 @@
     .stage { position: relative; margin-top: 64px; }
     .stage::after { content: ''; position: absolute; left: 4%; right: 4%; bottom: -18px; height: 80px; background: #FAFAFA; border-radius: 0 0 28px 28px; z-index: -1; }
     .stage .card { padding: 56px 40px; border-radius: 32px; }
-    .bc-phone { transition: transform .5s cubic-bezier(.16,1,.3,1); }
-    .bc-phone:hover { transform: scale(1.02); }
-    .bc-frame { box-shadow: 0 0 0 .3cqw rgba(0,0,0,.14), 0 5cqw 10cqw -5cqw rgba(0,0,0,.28); }
+    .shotrow { display: flex; justify-content: center; gap: 20px; }
+    .shotrow img { flex: 1 1 0; min-width: 0; max-width: 250px; width: 100%; height: auto; display: block; border-radius: 22px; transition: transform .5s cubic-bezier(.16,1,.3,1); }
+    .shotrow img:hover { transform: scale(1.02); }
 
     .meta { display: grid; grid-template-columns: 1fr 1.6fr; gap: 16px; }
     .meta-list { display: flex; flex-direction: column; gap: 24px; }
@@ -49,9 +47,8 @@
     .overview p.body { margin-top: 10px; font-size: 17px; line-height: 1.6; color: var(--ink); }
     .overview .stack { margin-top: 24px; }
 
-    .showcase { background: var(--card); border-radius: 32px; box-shadow: 0 20px 60px rgba(0,0,0,.08); overflow: hidden; padding: 56px 28px 0; }
-    .showcase .bc-phones { align-items: flex-start; gap: 20px; margin-bottom: -26%; }
-    .showcase .bc-phone, .showcase .bc-phone.mid { flex-basis: 300px; }
+    .showcase { background: var(--card); border-radius: 32px; box-shadow: 0 20px 60px rgba(0,0,0,.08); overflow: hidden; padding: 28px; }
+    .showcase .shotrow img { max-width: none; }
     .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
     .features .value { font-size: 20px; }
     .features p { margin-top: 6px; font-size: 15px; color: var(--muted); line-height: 1.5; }
@@ -88,7 +85,7 @@
 
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease-out, transform .6s ease-out; }
     .reveal.in { opacity: 1; transform: none; }
-    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .bc-phone, .dock a { transition: none; } html { scroll-behavior: auto; } }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .shotrow img, .dock a { transition: none; } html { scroll-behavior: auto; } }
 
     @media (max-width: 768px) {
       section + section, .stage + section { margin-top: 96px; }
@@ -97,12 +94,11 @@
       .hero p { font-size: 18px; }
       .stage { margin-top: 48px; }
       .stage .card { padding: 32px 0; }
-      .stage .bc-phones, .showcase .bc-phones { justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 0 16px 8px; gap: 16px; scroll-padding: 0 16px; }
-      .stage .bc-phones::-webkit-scrollbar, .showcase .bc-phones::-webkit-scrollbar { display: none; }
-      .stage .bc-phone, .stage .bc-phone.mid, .showcase .bc-phone, .showcase .bc-phone.mid { flex: 0 0 62%; scroll-snap-align: center; }
-      .stage .bc-phone:hover, .showcase .bc-phone:hover { transform: none; }
-      .showcase { padding: 32px 0 0; }
-      .showcase .bc-phones { margin-bottom: -40%; }
+      .shotrow { justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 0 16px; gap: 14px; scroll-padding: 0 16px; }
+      .shotrow::-webkit-scrollbar { display: none; }
+      .shotrow img, .showcase .shotrow img { flex: 0 0 62%; max-width: none; scroll-snap-align: center; border-radius: 18px; }
+      .shotrow img:hover { transform: none; }
+      .showcase { padding: 24px 0; }
       .meta, .features, .bento .r1, .bento .r2, .links { grid-template-columns: 1fr; }
       .card { padding: 24px; }
       .dock { gap: 6px; padding: 6px; }
@@ -120,7 +116,7 @@
     </section>
 
     <div class="stage reveal">
-      <div class="card"><div id="phones-main" class="bc-phones"></div></div>
+      <div class="card"><div id="shots-main" class="shotrow"></div></div>
     </div>
 
     <section class="meta reveal">
@@ -137,7 +133,7 @@
     </section>
 
     <section class="reveal">
-      <div class="showcase"><div id="phones-more" class="bc-phones"></div></div>
+      <div class="showcase"><div id="shots-more" class="shotrow"></div></div>
       <div class="features" id="features"></div>
     </section>
 
@@ -188,6 +184,7 @@
   </nav>
 
   <script>
+    const BC_ALT = {"ko": ["비슷한 사진은 한 묶음으로, 베스트 컷은 미리 골라 둬요", "흔들리고 어두운 사진은 알아서 표시해요", "한 장씩 넘기며 빠르게 골라요", "두 장 나란히 놓고 함께 확대해 비교", "고른 사진은 앨범으로, 지우기 전엔 꼭 확인해요", "사진은 iPhone 밖으로 나가지 않아요"], "en": ["Similar shots, grouped. Best one already picked.", "Blurry and dark shots, flagged for you.", "Swipe to pick, one photo at a time.", "Zoom two photos side by side.", "Your picks become an album. You confirm every delete.", "Your photos never leave your iPhone."]};
     const T = {
       ko: {
         tagline: '잘 나온 사진만 남기는 사진 정리 앱',
@@ -238,8 +235,10 @@
       document.querySelectorAll('[data-aria]').forEach(el => el.setAttribute('aria-label', t[el.dataset.aria]));
       document.getElementById('features').innerHTML = t.features.map(([h, p]) => `<div class="card"><p class="value">${h}</p><p>${p}</p></div>`).join('');
       document.querySelectorAll('.langs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
-      renderBestcutPhones(document.getElementById('phones-main'), lang, ['home', 'swipe', 'summary']);
-      renderBestcutPhones(document.getElementById('phones-more'), lang, ['trips', 'review', 'flagged']);
+      const sl = lang === 'ko' ? 'ko' : 'en';
+      const shots = list => list.map(n => `<img src="../assets/bestcut/shots/${sl}/${n}.webp" alt="${BC_ALT[sl][n - 1]}" width="720" height="1564" decoding="async">`).join('');
+      document.getElementById('shots-main').innerHTML = shots([1, 2, 3]);
+      document.getElementById('shots-more').innerHTML = shots([4, 5, 6]);
       document.querySelectorAll('a[data-sec]').forEach(a => a.setAttribute('href', '../?lang=' + lang + '#' + a.dataset.sec));
       try { history.replaceState(null, '', '?lang=' + lang); } catch (e) {}
     }
