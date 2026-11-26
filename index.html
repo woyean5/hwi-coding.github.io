@@ -132,7 +132,7 @@
     }
     .dock { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 58; display: flex; align-items: center; gap: 6px; padding: 8px; background: #fff; border-radius: 28px; box-shadow: 0 12px 40px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.04); }
     .dock a { position: relative; width: 48px; height: 48px; border-radius: 18px; display: grid; place-items: center; background: var(--card); color: var(--sub); transition: transform .25s cubic-bezier(.16,1,.3,1), color .2s; transform-origin: 50% 100%; }
-    .dock a:hover { transform: scale(1.14) translateY(-3px); }
+    @media (hover: hover) and (pointer: fine) { .dock a:hover { transform: scale(1.14) translateY(-3px); } }
     .dock a svg { width: 22px; height: 22px; }
     .dock a.on { color: var(--blue); }
     .dock a.on::after { content: ''; position: absolute; bottom: -6px; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--blue); }
@@ -205,7 +205,11 @@
 
     .nav-link.active { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(17,24,39,.08); }
 
-    .tok-k { color: #C084FC; } .tok-f { color: #60A5FA; } .tok-s { color: #86EFAC; } .tok-c { color: #FDBA74; } .tok-p { color: #94A3B8; }
+    .code-card { background: var(--card); }
+    .code-head { border-bottom: 1px solid rgba(0,0,0,.06); }
+    .code-name { color: rgba(0,0,0,.4); }
+    .code-body { color: #1F2937; }
+    .tok-k { color: #9333EA; } .tok-f { color: #2563EB; } .tok-s { color: #15803D; } .tok-c { color: #C2410C; } .tok-p { color: #94A3B8; }
 
     .cursor { display: inline-block; width: 8px; height: 15px; background: #94A3B8; vertical-align: -2px; animation: blink 1s steps(1) infinite; }
     @keyframes blink { 50% { opacity: 0; } }
@@ -310,7 +314,7 @@
 
       <div class="reveal d2 mt-7 inline-flex items-center gap-2.5 bg-white border border-slate-200 shadow-soft rounded-full pl-2 pr-5 py-2">
         <span class="w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center"><svg class="ic text-sm" aria-hidden="true"><use href="#i-graduation-cap"/></svg></span>
-        <span class="text-sm font-semibold text-slate-700" data-i18n="univ">Dong-A University · Artificial Intelligence</span>
+        <span class="text-sm font-semibold text-slate-700" data-i18n="univ">Dong-A University · AI</span>
       </div>
 
       <div class="reveal d3 mt-5 flex items-center gap-3">
@@ -381,14 +385,14 @@
         </div>
       </div>
 
-      <div class="reveal mt-4 rounded-3xl bg-slate-900 shadow-lift overflow-hidden">
-        <div class="flex items-center gap-2 px-5 py-3.5 border-b border-white/10">
+      <div class="reveal mt-4 rounded-3xl overflow-hidden code-card">
+        <div class="flex items-center gap-2 px-5 py-3.5 code-head">
           <span class="w-3 h-3 rounded-full bg-red-400"></span>
           <span class="w-3 h-3 rounded-full bg-amber-400"></span>
           <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
-          <span class="ml-3 text-xs text-slate-400 font-mono">geonhwi.py</span>
+          <span class="ml-3 text-xs font-mono code-name">geonhwi.py</span>
         </div>
-        <pre class="px-6 py-5 text-[13px] md:text-sm leading-7 font-mono text-slate-200 overflow-x-auto"><span class="tok-k">class</span> <span class="tok-c">Geonhwi</span><span class="tok-p">:</span>
+        <pre class="px-6 py-5 text-[13px] md:text-sm leading-7 font-mono code-body overflow-x-auto"><span class="tok-k">class</span> <span class="tok-c">Geonhwi</span><span class="tok-p">:</span>
     <span class="tok-k">def</span> <span class="tok-f">__init__</span><span class="tok-p">(</span>self<span class="tok-p">):</span>
         self<span class="tok-p">.</span>major <span class="tok-p">=</span> <span class="tok-s">"Artificial Intelligence"</span>
         self<span class="tok-p">.</span>loves <span class="tok-p">= [</span><span class="tok-s">"AI"</span><span class="tok-p">,</span> <span class="tok-s">"Content"</span><span class="tok-p">,</span> <span class="tok-s">"Travel"</span><span class="tok-p">]</span>
@@ -407,10 +411,12 @@
           <span class="px-6">Coding 💻</span><span class="px-6 text-slate-300">·</span>
           <span class="px-6">Editing 🎬</span><span class="px-6 text-slate-300">·</span>
           <span class="px-6">Traveling ✈️</span><span class="px-6 text-slate-300">·</span>
+          <span class="px-6">Running 🏃</span><span class="px-6 text-slate-300">·</span>
           <span class="px-6">Languages 🌏</span><span class="px-6 text-slate-300">·</span>
           <span class="px-6">Coding 💻</span><span class="px-6 text-slate-300">·</span>
           <span class="px-6">Editing 🎬</span><span class="px-6 text-slate-300">·</span>
           <span class="px-6">Traveling ✈️</span><span class="px-6 text-slate-300">·</span>
+          <span class="px-6">Running 🏃</span><span class="px-6 text-slate-300">·</span>
           <span class="px-6">Languages 🌏</span><span class="px-6 text-slate-300">·</span>
         </div>
       </div>
@@ -584,7 +590,7 @@
         navHome: 'Home', navWorks: 'Works', navAbout: 'About',
         heroTitle: 'Hi, I’m Geonhwi',
         heroSub: 'I build AI & create digital experiences.',
-        univ: 'Dong-A University · Artificial Intelligence',
+        univ: 'Dong-A University · AI',
         avail: 'Open to collaborations',
         aboutKicker: 'About',
         aboutTitle: 'AI student with a love for building.',
@@ -624,8 +630,8 @@
         aboutKicker: '소개',
         aboutTitle: '만드는 걸 좋아하는 AI 전공생.',
         expKicker: '활동 경력',
-        role1: '제5대 인공지능학과 학생회 \'푸름\' 홍보 차장',
-        role1Desc: '동아대학교 인공지능학과의 콘텐츠 제작, 홍보 캠페인, 커뮤니티 활동을 이끌고 있습니다.',
+        role1: '제5대 AI학과 학생회 \'푸름\' 홍보 차장',
+        role1Desc: '동아대학교 AI학과의 콘텐츠 제작, 홍보 캠페인, 커뮤니티 활동을 이끌고 있습니다.',
         tagPR: '홍보', tagVideo: '영상', tagCommunity: '커뮤니티',
         inspireKicker: '무엇이 나를 움직일까?',
         inspire: '아이디어를 실제로 쓰이는 결과물로 만드는 일.',
@@ -654,13 +660,13 @@
         navHome: 'ホーム', navWorks: '作品', navAbout: '自己紹介',
         heroTitle: 'Hi, I’m Geonhwi',
         heroSub: 'AIとデジタル体験をつくっています。',
-        univ: '東亜大学校 · 人工知能学科',
+        univ: '東亜大学校 · AI学科',
         avail: 'コラボのご相談歓迎',
         aboutKicker: '自己紹介',
         aboutTitle: 'ものづくりが好きなAI専攻生。',
         expKicker: '経歴',
-        role1: '第5代人工知能学科学生会「プルム」広報次長',
-        role1Desc: '東亜大学校の人工知能学科で、コンテンツ制作・広報キャンペーン・コミュニティ運営を担当しています。',
+        role1: '第5代AI学科学生会「プルム」広報次長',
+        role1Desc: '東亜大学校のAI学科で、コンテンツ制作・広報キャンペーン・コミュニティ運営を担当しています。',
         tagPR: '広報', tagVideo: '映像', tagCommunity: 'コミュニティ',
         inspireKicker: '私の原動力は?',
         inspire: 'アイデアを、実際に使われる形にしていくこと。',
@@ -702,8 +708,8 @@
         category: 'Branding & Media Creation',
         tags: ['Video Editing', 'PR Strategy', 'Graphic Design', 'YouTube'],
         en: "As PR Deputy Director of the 5th AI Student Council 'Pureum', I created branding assets, promo videos and social campaigns for students.",
-        ko: "제5대 인공지능학과 학생회 '푸름'의 홍보 차장으로서 홍보 영상, 카드뉴스, 행사 비주얼 브랜딩을 기획하고 제작했습니다.",
-        ja: "第5代人工知能学科学生会「プルム」の広報次長として、広報映像、カードニュース、イベント用のビジュアルブランディングを企画・制作しました。",
+        ko: "제5대 AI학과 학생회 '푸름'의 홍보 차장으로서 홍보 영상, 카드뉴스, 행사 비주얼 브랜딩을 기획하고 제작했습니다.",
+        ja: "第5代AI学科学生会「プルム」の広報次長として、広報映像、カードニュース、イベント用のビジュアルブランディングを企画・制作しました。",
         youtube: 'https://youtube.com/@conner_217?si=lacO6ZT7flECPBes',
         instagram: 'https://instagram.com/217.1717'
       },
