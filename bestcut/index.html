@@ -43,6 +43,11 @@
     .hero img { width: 96px; height: 96px; border-radius: 22px; display: block; margin: 0 auto; }
     .hero h1 { margin-top: 28px; font-size: 48px; font-weight: 600; letter-spacing: -.03em; line-height: 1.1; }
     .hero p { margin-top: 12px; font-size: 21px; font-weight: 500; color: var(--muted); letter-spacing: -.01em; }
+    .store-wrap { margin-top: 28px; }
+    .store { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; font-size: 16px; font-weight: 600; letter-spacing: -.01em; background: #000; color: #fff; transition: transform .25s cubic-bezier(.16,1,.3,1), opacity .2s; }
+    .store svg { width: 18px; height: 18px; }
+    a.store:hover { transform: translateY(-1px); opacity: .85; }
+    .store.soon { background: var(--card); color: var(--muted); }
 
     .stage { position: relative; }
     .stage::after { content: ''; position: absolute; left: 4%; right: 4%; bottom: -18px; height: 80px; background: #FAFAFA; border-radius: 0 0 28px 28px; z-index: -1; }
@@ -136,6 +141,7 @@
       <img src="../assets/bestcut/icon.png" alt="BestCut app icon" width="96" height="96">
       <h1>BestCut</h1>
       <p data-t="tagline"></p>
+      <div class="store-wrap"><span id="store-btn" class="store soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg><span data-t="storeSoon"></span></span></div>
     </section>
 
     <section class="meta reveal">
@@ -231,6 +237,7 @@
     const T = {
       ko: {
         tagline: '잘 나온 사진만 남기는 사진 정리 앱',
+        storeSoon: 'App Store 출시 예정', storeGet: 'App Store에서 받기',
         lType: '유형', vType: '개인 프로젝트', lRole: '역할', vRole: 'iOS 개발 · 디자인', lYear: '연도',
         lOverview: '소개', lStack: '기술',
         overview: '여행이나 주말처럼 기간을 고르면, 그 기간의 사진을 iPhone 안에서 분석해 비슷한 사진은 한 묶음으로 모으고 흔들리거나 어두운 사진을 표시해요. 묶음마다 가장 잘 나온 사진을 추천해서, 사용자는 고르기만 하면 돼요. 사진은 기기 밖으로 나가지 않아요.',
@@ -244,6 +251,7 @@
       },
       en: {
         tagline: 'Keep only your best shots.',
+        storeSoon: 'Coming soon to the App Store', storeGet: 'Get it on the App Store',
         lType: 'Type', vType: 'Personal Project', lRole: 'Role', vRole: 'iOS Development · Design', lYear: 'Year',
         lOverview: 'Overview', lStack: 'Stack',
         overview: 'Pick a date range, like a trip or a weekend, and BestCut analyzes those photos on the iPhone. It groups similar shots, flags blurry or dark ones, and suggests the best photo in each group, so all you do is pick. Your photos never leave the device.',
@@ -257,6 +265,7 @@
       },
       ja: {
         tagline: 'よく撮れた写真だけを残す写真整理アプリ',
+        storeSoon: 'App Storeで近日公開', storeGet: 'App Storeで入手',
         lType: '種類', vType: '個人プロジェクト', lRole: '役割', vRole: 'iOS開発・デザイン', lYear: '年',
         lOverview: '概要', lStack: '技術',
         overview: '旅行や週末など期間を選ぶと、その期間の写真をiPhoneの中で分析し、似た写真をまとめ、ブレた写真や暗い写真に印を付けます。グループごとに一番よく撮れた写真をおすすめするので、あとは選ぶだけ。写真が端末の外に出ることはありません。',
@@ -269,6 +278,22 @@
         home: 'ホーム', works: 'プロジェクト', about: '紹介', backWorks: 'プロジェクトに戻る'
       }
     };
+
+    const APP_STORE_URL = '';
+
+    function renderStore(t) {
+      const btn = document.getElementById('store-btn');
+      const label = btn.querySelector('[data-t]');
+      if (APP_STORE_URL) {
+        const a = document.createElement('a');
+        a.id = 'store-btn'; a.className = 'store'; a.href = APP_STORE_URL; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.innerHTML = btn.innerHTML; btn.replaceWith(a);
+        a.querySelector('[data-t]').dataset.t = 'storeGet';
+        a.querySelector('[data-t]').textContent = t.storeGet;
+      } else {
+        label.textContent = t.storeSoon;
+      }
+    }
 
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
     const galleries = [...document.querySelectorAll('.gal-pin')].map(pin => ({
@@ -308,6 +333,7 @@
       const t = T[lang];
       document.documentElement.lang = lang;
       document.querySelectorAll('[data-t]').forEach(el => { el.textContent = t[el.dataset.t]; });
+      renderStore(t);
       document.querySelectorAll('[data-aria]').forEach(el => el.setAttribute('aria-label', t[el.dataset.aria]));
       document.getElementById('features').innerHTML = t.features.map(([h, p]) => `<div class="card"><p class="value">${h}</p><p>${p}</p></div>`).join('');
       document.querySelectorAll('.langs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
