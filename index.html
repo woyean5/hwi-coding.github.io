@@ -406,7 +406,7 @@
         <pre class="px-6 py-5 text-[13px] md:text-sm leading-7 font-mono code-body overflow-x-auto"><span class="tok-k">class</span> <span class="tok-c">Geonhwi</span><span class="tok-p">:</span>
     <span class="tok-k">def</span> <span class="tok-f">__init__</span><span class="tok-p">(</span>self<span class="tok-p">):</span>
         self<span class="tok-p">.</span>major <span class="tok-p">=</span> <span class="tok-s">"AI"</span>
-        self<span class="tok-p">.</span>loves <span class="tok-p">= [</span><span class="tok-s">"AI"</span><span class="tok-p">,</span> <span class="tok-s">"Content"</span><span class="tok-p">,</span> <span class="tok-s">"Travel"</span><span class="tok-p">]</span>
+        self<span class="tok-p">.</span>loves <span class="tok-p">= [</span><span class="tok-s">"AI"</span><span class="tok-p">,</span> <span class="tok-s">"Content"</span><span class="tok-p">,</span> <span class="tok-s">"Travel"</span><span class="tok-p">,</span> <span class="tok-s">"Running"</span><span class="tok-p">]</span>
 
     <span class="tok-k">def</span> <span class="tok-f">say_hi</span><span class="tok-p">(</span>self<span class="tok-p">):</span>
         <span class="tok-k">return</span> <span class="tok-s">"Hi, I'm Geonhwi!"</span><span class="cursor ml-1"></span></pre>
@@ -735,7 +735,7 @@
       }
     };
 
-    const BC_ALT = {"ko": ["비슷한 사진은 한 묶음으로, 베스트 컷은 미리 골라 둬요", "흔들리고 어두운 사진은 알아서 표시해요", "한 장씩 넘기며 빠르게 골라요", "두 장 나란히 놓고 함께 확대해 비교", "고른 사진은 앨범으로, 지우기 전엔 꼭 확인해요", "사진은 iPhone 밖으로 나가지 않아요"], "en": ["Similar shots, grouped. Best one already picked.", "Blurry and dark shots, flagged for you.", "Swipe to pick, one photo at a time.", "Zoom two photos side by side.", "Your picks become an album. You confirm every delete.", "Your photos never leave your iPhone."]};
+    const BC_ALT = {"ko": ["비슷한 사진은 한 묶음으로, 베스트 컷은 미리 골라 둬요", "흔들리고 어두운 사진은 알아서 표시해요", "한 장씩 넘기며 빠르게 골라요", "두 장 나란히 놓고 함께 확대해 비교", "고른 사진은 앨범으로, 지우기 전엔 꼭 확인해요", "사진은 iPhone 밖으로 나가지 않아요"], "en": ["Similar shots, grouped. Best one already picked.", "Blurry and dark shots, flagged for you.", "Swipe to pick, one photo at a time.", "Zoom two photos side by side.", "Your picks become an album. You confirm every delete.", "Your photos never leave your iPhone."], "ja": ["似た写真はひとまとめに、ベストショットは選んでおきます", "ブレた写真や暗い写真は自動でお知らせ", "1枚ずつスワイプしてサクサク選べる", "2枚を並べて一緒に拡大して比較", "選んだ写真はアルバムに、削除の前に必ず確認", "写真がiPhoneの外に出ることはありません"]};
     const workItems = [
       { title: 'BestCut', desc: 'appTag', meta: 'Swift · SwiftUI · Vision', accent: '#15803D', href: 'bestcut/', shots: [1, 3, 5] },
       { title: 'Vision AI Recognition', desc: 'p1Short', meta: 'Python · PyTorch · OpenCV', accent: '#4F46E5', modal: 'project1', art: ['from-indigo-500 via-indigo-600 to-purple-600', 'AI', 'i-brain'] },
@@ -749,7 +749,7 @@
       const d = dict[lang];
       list.innerHTML = workItems.map((w, i) => {
         const open = w.href ? `href="${w.href}?lang=${lang}"` : `href="#works" onclick="event.preventDefault(); openModal('${w.modal}')"`;
-        const sl = lang === 'ko' ? 'ko' : 'en';
+        const sl = lang === 'en' ? 'en' : lang;
         const visual = w.shots
           ? `<div class="wk-phones"><div class="wk-shotrow">${w.shots.map(n => `<img src="assets/bestcut/shots/${sl}/${n}.webp" alt="${BC_ALT[sl][n - 1]}" width="720" height="1564" decoding="async">`).join('')}</div></div>`
           : `<div class="wk-art bg-gradient-to-br ${w.art[0]} p-6 flex flex-col justify-between relative overflow-hidden">

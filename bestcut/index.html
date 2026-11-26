@@ -227,7 +227,7 @@
   </nav>
 
   <script>
-    const BC_ALT = {"ko": ["비슷한 사진은 한 묶음으로, 베스트 컷은 미리 골라 둬요", "흔들리고 어두운 사진은 알아서 표시해요", "한 장씩 넘기며 빠르게 골라요", "두 장 나란히 놓고 함께 확대해 비교", "고른 사진은 앨범으로, 지우기 전엔 꼭 확인해요", "사진은 iPhone 밖으로 나가지 않아요"], "en": ["Similar shots, grouped. Best one already picked.", "Blurry and dark shots, flagged for you.", "Swipe to pick, one photo at a time.", "Zoom two photos side by side.", "Your picks become an album. You confirm every delete.", "Your photos never leave your iPhone."]};
+    const BC_ALT = {"ko": ["비슷한 사진은 한 묶음으로, 베스트 컷은 미리 골라 둬요", "흔들리고 어두운 사진은 알아서 표시해요", "한 장씩 넘기며 빠르게 골라요", "두 장 나란히 놓고 함께 확대해 비교", "고른 사진은 앨범으로, 지우기 전엔 꼭 확인해요", "사진은 iPhone 밖으로 나가지 않아요"], "en": ["Similar shots, grouped. Best one already picked.", "Blurry and dark shots, flagged for you.", "Swipe to pick, one photo at a time.", "Zoom two photos side by side.", "Your picks become an album. You confirm every delete.", "Your photos never leave your iPhone."], "ja": ["似た写真はひとまとめに、ベストショットは選んでおきます", "ブレた写真や暗い写真は自動でお知らせ", "1枚ずつスワイプしてサクサク選べる", "2枚を並べて一緒に拡大して比較", "選んだ写真はアルバムに、削除の前に必ず確認", "写真がiPhoneの外に出ることはありません"]};
     const T = {
       ko: {
         tagline: '잘 나온 사진만 남기는 사진 정리 앱',
@@ -311,7 +311,7 @@
       document.querySelectorAll('[data-aria]').forEach(el => el.setAttribute('aria-label', t[el.dataset.aria]));
       document.getElementById('features').innerHTML = t.features.map(([h, p]) => `<div class="card"><p class="value">${h}</p><p>${p}</p></div>`).join('');
       document.querySelectorAll('.langs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
-      const sl = lang === 'ko' ? 'ko' : 'en';
+      const sl = lang === 'en' ? 'en' : lang;
       const shots = list => list.map(n => `<img src="../assets/bestcut/shots/${sl}/${n}.webp" alt="${BC_ALT[sl][n - 1]}" width="720" height="1564" decoding="async">`).join('');
       galleries.forEach(g => { g.track.innerHTML = shots(g.track.dataset.shots.split(',').map(Number)); });
       layoutGalleries();
