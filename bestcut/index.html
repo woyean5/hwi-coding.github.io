@@ -15,6 +15,7 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://woyean5.github.io/assets/bestcut/og-image-ko.png">
+  <script src="../assets/bestcut/store.js"></script>
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -279,7 +280,7 @@
       }
     };
 
-    const APP_STORE_URL = '';
+    const APP_STORE_URL = window.BESTCUT_APP_STORE_URL || '';
 
     function renderStore(t) {
       const btn = document.getElementById('store-btn');

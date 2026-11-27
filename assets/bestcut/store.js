@@ -1,0 +1,1 @@
+window.BESTCUT_APP_STORE_URL = '';

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Geonhwi Yang | Portfolio</title>
+  <script src="assets/bestcut/store.js"></script>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -95,6 +96,11 @@
     .wk-meta { margin-top: 6px; font-size: 12px; font-weight: 600; color: var(--mute); }
     .wk-more { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; padding: 12px 20px; border-radius: 999px; color: #fff; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; transition: transform .25s cubic-bezier(.16,1,.3,1), filter .2s; cursor: pointer; border: 0; }
     .wk-more:hover { transform: translateY(-1px); filter: brightness(1.08); }
+    .wk-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; flex-shrink: 0; }
+    .wk-store { display: inline-flex; align-items: center; gap: 6px; padding: 12px 18px; border-radius: 999px; font-size: 14px; font-weight: 600; letter-spacing: -0.01em; background: #000; color: #fff; transition: transform .25s cubic-bezier(.16,1,.3,1), opacity .2s; }
+    a.wk-store:hover { transform: translateY(-1px); opacity: .85; }
+    .wk-store.soon { background: #fff; color: var(--sub); }
+    .wk-store svg { width: 16px; height: 16px; }
     .wk-box { display: block; margin-top: 28px; background: #fff; border-radius: 24px; overflow: hidden; cursor: pointer; }
     .wk-box > * { transition: transform .6s cubic-bezier(.16,1,.3,1); }
     .wk-box:hover > * { transform: scale(1.015); }
@@ -103,6 +109,7 @@
     .wk-shotrow img { flex: 1 1 0; min-width: 0; width: 100%; height: auto; display: block; border-radius: 16px; }
     .wk-art { margin: 12px; height: min(240px, 30vh); border-radius: 16px; }
     @media (max-width: 640px) {
+      .wk-actions { justify-content: flex-start; }
       .wk-title { font-size: 40px; }
       .wk-card { padding: 22px; border-radius: 28px; }
       .wk-desc { max-width: none; }
@@ -119,6 +126,7 @@
       .wk-art { height: 24vh; }
     }
     @media (max-height: 640px) {
+      .wk-store { padding: 9px 14px; font-size: 13px; }
       .wk-meta { display: none; }
       .wk-num { display: none; }
       .wk-name { margin-top: 0; font-size: 24px; }
@@ -614,7 +622,7 @@
         toronto: '12-week study in Toronto, Canada',
         langs: 'EN · Basic Chinese & Japanese',
         likeKicker: 'I also like…',
-        appKicker: 'Featured App', appTitle: "What I'm Building", appTag: 'Keep only your best shots.', readMore: 'Read More',
+        appKicker: 'Featured App', appTitle: "What I'm Building", appTag: 'Keep only your best shots.', readMore: 'Read More', storeSoon: 'Coming soon to the App Store', storeGet: 'App Store',
         workSub: "Things I've built, planned and made.",
         workKicker: 'Experience', workTitle: 'Projects',
         p1Short: 'Computer vision app built with Python and deep learning models.',
@@ -649,7 +657,7 @@
         toronto: '캐나다 토론토 12주 어학연수',
         langs: '영어 · 중국어/일본어 기초 회화',
         likeKicker: '이런 것도 좋아해요…',
-        appKicker: '대표 앱', appTitle: "지금 만들고 있는 앱", appTag: '잘 나온 사진만 남기는 사진 정리 앱.', readMore: '자세히 보기',
+        appKicker: '대표 앱', appTitle: "지금 만들고 있는 앱", appTag: '잘 나온 사진만 남기는 사진 정리 앱.', readMore: '자세히 보기', storeSoon: 'App Store 출시 예정', storeGet: 'App Store',
         workSub: "직접 만들고 기획한 것들",
         workKicker: '경험', workTitle: '프로젝트',
         p1Short: 'Python과 딥러닝 모델로 만든 컴퓨터 비전 프로젝트.',
@@ -684,7 +692,7 @@
         toronto: 'カナダ・トロントで12週間の語学研修',
         langs: '英語 · 中国語・日本語（基礎会話）',
         likeKicker: 'こんなことも好きです…',
-        appKicker: '注目アプリ', appTitle: "いま作っているアプリ", appTag: 'よく撮れた写真だけを残す写真整理アプリ。', readMore: '詳しく見る',
+        appKicker: '注目アプリ', appTitle: "いま作っているアプリ", appTag: 'よく撮れた写真だけを残す写真整理アプリ。', readMore: '詳しく見る', storeSoon: 'App Storeで近日公開', storeGet: 'App Store',
         workSub: "つくって、企画してきたもの",
         workKicker: '経験', workTitle: 'プロジェクト',
         p1Short: 'Pythonとディープラーニングで作った画像認識プロジェクト。',
@@ -737,11 +745,19 @@
 
     const BC_ALT = {"ko": ["비슷한 사진은 한 묶음으로, 베스트 컷은 미리 골라 둬요", "흔들리고 어두운 사진은 알아서 표시해요", "한 장씩 넘기며 빠르게 골라요", "두 장 나란히 놓고 함께 확대해 비교", "고른 사진은 앨범으로, 지우기 전엔 꼭 확인해요", "사진은 iPhone 밖으로 나가지 않아요"], "en": ["Similar shots, grouped. Best one already picked.", "Blurry and dark shots, flagged for you.", "Swipe to pick, one photo at a time.", "Zoom two photos side by side.", "Your picks become an album. You confirm every delete.", "Your photos never leave your iPhone."], "ja": ["似た写真はひとまとめに、ベストショットは選んでおきます", "ブレた写真や暗い写真は自動でお知らせ", "1枚ずつスワイプしてサクサク選べる", "2枚を並べて一緒に拡大して比較", "選んだ写真はアルバムに、削除の前に必ず確認", "写真がiPhoneの外に出ることはありません"]};
     const workItems = [
-      { title: 'BestCut', desc: 'appTag', meta: 'Swift · SwiftUI · Vision', accent: '#15803D', href: 'bestcut/', shots: [1, 3, 5] },
+      { title: 'BestCut', desc: 'appTag', meta: 'Swift · SwiftUI · Vision', accent: '#15803D', href: 'bestcut/', shots: [1, 3, 5], store: true },
       { title: 'Vision AI Recognition', desc: 'p1Short', meta: 'Python · PyTorch · OpenCV', accent: '#4F46E5', modal: 'project1', art: ['from-indigo-500 via-indigo-600 to-purple-600', 'AI', 'i-brain'] },
       { title: 'Pureum Student Council Media', desc: 'p2Short', meta: 'Video Editing · Branding', accent: '#E11D48', modal: 'project2', art: ['from-rose-500 via-rose-500 to-amber-500', 'PR · Media', 'i-clapperboard'] },
       { title: 'Toronto Study Log', desc: 'p3Short', meta: 'Vlog · Global Network', accent: '#0D9488', modal: 'project3', art: ['from-teal-500 via-emerald-500 to-emerald-600', 'Global', 'i-earth-americas'] }
     ];
+
+    function storeButton(d) {
+      const icon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>';
+      const url = window.BESTCUT_APP_STORE_URL;
+      return url
+        ? `<a class="wk-store" href="${url}" target="_blank" rel="noopener noreferrer">${icon}${d.storeGet}</a>`
+        : `<span class="wk-store soon">${icon}${d.storeSoon}</span>`;
+    }
 
     function renderWorks(lang) {
       const list = document.getElementById('works-list');
@@ -765,7 +781,10 @@
               <p class="wk-desc">${d[w.desc]}</p>
               <p class="wk-meta">${w.meta}</p>
             </div>
-            <a class="wk-more" style="background:${w.accent}" ${open}>${d.readMore} <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            <div class="wk-actions">
+              <a class="wk-more" style="background:${w.accent}" ${open}>${d.readMore} <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+              ${w.store ? storeButton(d) : ''}
+            </div>
           </div>
           <a class="wk-box" ${open} aria-label="${w.title}">${visual}</a>
         </article>`;
